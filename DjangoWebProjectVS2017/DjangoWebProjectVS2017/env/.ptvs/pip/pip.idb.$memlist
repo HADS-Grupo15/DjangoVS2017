@@ -3,8 +3,8 @@ get_summaries
 PipError
 UpdatingDefaultsHelpFormatter
 InstallationError
-operations
 models
+operations
 __main__
 baseparser
 wheel

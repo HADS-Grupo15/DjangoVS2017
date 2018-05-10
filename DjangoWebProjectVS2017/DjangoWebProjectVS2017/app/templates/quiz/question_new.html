@@ -5,10 +5,10 @@
 <h3>{{ message }}</h3>
 
 <h1>Insertar una pregunta</h1>
-        <form method="GET" class="post-form">{% csrf_token %}
+        <form method="POST" class="post-form">{% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="save btn btn-default">Save</button>
         </form>
-<a href="{% url 'index' %}">Ver preguntas</a> 
+<a href="{% url 'qindex' %}">Ver preguntas</a> 
 
 {% endblock %}

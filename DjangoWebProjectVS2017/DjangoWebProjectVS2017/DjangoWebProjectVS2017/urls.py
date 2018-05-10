@@ -54,11 +54,11 @@ urlpatterns = [
     url(r'^polls/(?P<question_id>\d+)/$', app.views.detail, name='detail'),
     url(r'^polls/(?P<question_id>\d+)/vote/$', app.views.vote, name='vote'),
     url(r'^polls/', app.views.index, name='index'),
-    url(r'^quiz/add/', app.views.Quiz_question_new, name='add'),
-    url(r'^quiz/choice_add/(?P<question_id>\d+)/$', app.views.Quiz_choice_add, name='choice_add'),
-    url(r'^(?P<question_id>\d+)/results/$', app.views.results, name='results'),#mas adelante
-    url(r'^quiz/(?P<question_id>\d+)/$', app.views.QuizDetail, name='detail'),
-    url(r'^quiz/(?P<question_id>\d+)/vote/$', app.views.vote, name='vote'),#mas adelante(?)
-    url(r'^quiz/', app.views.Quiz_index, name='index')
+    url(r'^quiz/add/', app.views.Quiz_question_new, name='qadd'),
+    url(r'^quiz/choice_add/(?P<question_id>\d+)/$', app.views.Quiz_choice_add, name='qchoice_add'),
+    url(r'^(?P<question_id>\d+)/results/$', app.views.results, name='qresults'),
+    url(r'^quiz/(?P<question_id>\d+)/$', app.views.QuizDetail, name='qdetail'),
+    url(r'^quiz/(?P<question_id>\d+)/vote/$', app.views.vote, name='qvote'),
+    url(r'^quiz/', app.views.Quiz_index, name='qindex')
    
 ]

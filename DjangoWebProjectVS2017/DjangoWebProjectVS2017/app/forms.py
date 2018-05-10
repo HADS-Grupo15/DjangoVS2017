@@ -23,7 +23,7 @@ class QuizQuestionForm(forms.ModelForm):
 
         class Meta:
             model = QuizQuestion
-            fields = ('question_text',)
+            fields = ('question_text','topic')
 
 class QuizChoiceForm(forms.ModelForm):
 

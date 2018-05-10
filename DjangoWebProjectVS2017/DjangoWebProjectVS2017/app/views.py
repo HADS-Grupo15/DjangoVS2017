@@ -66,7 +66,7 @@ def Quiz_index(request):
     latest_question_list = QuizQuestion.objects.order_by('-pub_date')
     template = loader.get_template('quiz/index.html')
     context = {
-                'title':'Lista de preguntas de la encuesta',
+                'title':'Lista de preguntas del Quiz',
                 'latest_question_list': latest_question_list,
               }
     return render(request, 'quiz/index.html', context)
@@ -111,7 +111,8 @@ def choice_add(request, question_id):
                 choice = form.save(commit = False)
                 choice.question = question
                 choice.vote = 0
-                choice.save()         
+                choice.save() 
+                return render(request, 'polls/choice_new.html', {'title':'Pregunta:'+ question.question_text,'form': form})
                 #form.save()
         else: 
             form = ChoiceForm()
@@ -138,11 +139,11 @@ def Quiz_question_new(request):
                 question = form.save(commit=False)
                 question.pub_date=datetime.now()
                 question.save()
-                #return redirect('detail', pk=question_id)
-                return render(request, 'quiz/index.html', {'title':'Ha funcionado','question': question})
+                return redirect('qindex')
+                #return render(request, 'quiz/index.html', {'question': question})
         else:
             form = QuizQuestionForm()
-            return render(request, 'quiz/index.html', {'tile':'Ha funcioaao','form': form})
+            return render(request, 'quiz/question_new.html', {'form': form})
 
 def Quiz_choice_add(request, question_id):
         question = QuizQuestion.objects.get(id = question_id)
@@ -151,9 +152,12 @@ def Quiz_choice_add(request, question_id):
             if form.is_valid():
                 choice = form.save(commit = False)
                 choice.question = question
+                choice.correctAnswer = False
                 choice.vote = 0
-                choice.save()         
-                #form.save()
+                choice.save()
+                #('qdetail')
+                #return render(request, 'quiz/detail.html', {'title':'Pregunta:'+ question.question_text,'topic':'Tema: '+question.topic,'form': form})#añadirle el flag(?)#
+                
         else: 
             form = QuizChoiceForm()
         #return render_to_response ('choice_new.html', {'form': form, 'poll_id': poll_id,}, context_instance = RequestContext(request),)

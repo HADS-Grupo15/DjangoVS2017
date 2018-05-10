@@ -7,7 +7,7 @@
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>
+        <li><a href="{% url 'qdetail' question.id %}">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
   
@@ -15,7 +15,7 @@
     <p>No quizes are available.</p>
 {% endif %}
 {% if request.user.is_authenticated %}
-<a href="{% url 'add' %}"><h2>Insertar pregunta</h2></a> 
+<a href="{% url 'qadd' %}"><h2>Insertar pregunta</h2></a> 
 {% endif %}
 
 {% endblock %}
