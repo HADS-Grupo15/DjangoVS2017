@@ -2,17 +2,14 @@
 {% block content %}
 
 <h2>{{ title }}</h2>
-<h2>{{ topic }}</h2>
-<h3>{{ message }}</h3>
+<h3>{{ topic }}</h3>
 
 <h1>Insertar una opción</h1>
         <form method="POST" class="post-form">{% csrf_token %}
             {{ form.as_p }}
-        <p>
-            ¿Es esta la respuesta correcta?
-        </p>
-            <button type="submit" class="save btn btn-default">Save</button>
+        <button type="submit" class="save btn btn-default">Save</button>
         </form>
+{% if error_message %}<p><strong style="color:red;"><b>{{ error_message }}</b></strong></p>{% endif %}
 <a href="{% url 'qindex' %}">Ver preguntas</a> 
 
 {% endblock %}

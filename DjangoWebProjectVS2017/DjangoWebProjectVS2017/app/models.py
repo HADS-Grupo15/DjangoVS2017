@@ -15,10 +15,17 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
+TOPIC_CHOICES = (
+    #(lo que se guardará, lo que se mostrará),
+    ('Trabajo final HADS','Trabajo final HADS'),
+    ('Evaluación HADS', 'Evaluación HADS'),
+    ('Informática','Informática'),
+    ('Otro','Otro'),
+)
 class QuizQuestion(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-    topic = models.CharField(max_length=200)
+    topic = models.CharField(max_length=6, choices=TOPIC_CHOICES, default='TFHADS')
 
 class QuizChoice(models.Model):
     question = models.ForeignKey(QuizQuestion)
@@ -29,3 +36,4 @@ class QuizChoice(models.Model):
 class User(models.Model):
     email = models.CharField(max_length=200)
     nombre = models.CharField(max_length=200)
+

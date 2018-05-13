@@ -139,29 +139,33 @@ def Quiz_question_new(request):
                 question = form.save(commit=False)
                 question.pub_date=datetime.now()
                 question.save()
-                return redirect('qindex')
+                #return redirect('qindex')
                 #return render(request, 'quiz/index.html', {'question': question})
         else:
             form = QuizQuestionForm()
-            return render(request, 'quiz/question_new.html', {'form': form})
+        return render(request, 'quiz/question_new.html', {'form': form})
 
 def Quiz_choice_add(request, question_id):
-        question = QuizQuestion.objects.get(id = question_id)
+        q = QuizQuestion.objects.get(id = question_id)
+        error_message = ''
         if request.method =='POST':
             form = QuizChoiceForm(request.POST)
-            if form.is_valid():
-                choice = form.save(commit = False)
-                choice.question = question
-                choice.correctAnswer = False
-                choice.vote = 0
-                choice.save()
-                #('qdetail')
-                #return render(request, 'quiz/detail.html', {'title':'Pregunta:'+ question.question_text,'topic':'Tema: '+question.topic,'form': form})#añadirle el flag(?)#
+            if QuizChoice.objects.filter(question=q).count() < 4:
+                if form.is_valid():
+                    choice = form.save(commit = False)
+                    choice.question = q
+                    choice.correctAnswer = False
+                    choice.vote = 0
+                    choice.save()
+                    #('qdetail')
+                    #return render(request, 'quiz/detail.html', {'title':'Pregunta:'+ question.question_text,'topic':'Tema: '+question.topic,'form': form})#añadirle el flag(?)#
+            else:
+              error_message = 'ERROR: No se pueden guardar más de 4 opciones por pregunta'
                 
         else: 
             form = QuizChoiceForm()
         #return render_to_response ('choice_new.html', {'form': form, 'poll_id': poll_id,}, context_instance = RequestContext(request),)
-        return render(request, 'quiz/choice_new.html', {'title':'Pregunta:'+ question.question_text,'topic':'Tema: '+question.topic,'form': form})#añadirle el flag(?)#
+        return render(request, 'quiz/choice_new.html', {'title':'Pregunta:'+ q.question_text,'topic':'Tema: '+q.topic,'form': form, 'error_message': error_message})#añadirle el flag(?)#
 
 def chart(request, question_id):
     q=Question.objects.get(id = question_id)

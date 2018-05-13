@@ -7,7 +7,15 @@
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'qdetail' question.id %}">{{ question.question_text }}</a></li>
+        <li>
+            {% if question.choice_set.all|length > 2 %}
+                <a href="{% url 'qdetail' question.id %}">{{ question.question_text }}</a>
+            {% elif request.user.is_authenticated %}
+                <a href="{% url 'qdetail' question.id %}" style="color: red">{{ question.question_text }}</a>
+            {% else %}
+                {{ question.question_text }}
+            {% endif %}
+        </li>
     {% endfor %}
     </ul>
   
