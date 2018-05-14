@@ -80,6 +80,7 @@
     <Content Include="app\templates\quiz\detail.html" />
     <Content Include="app\templates\quiz\index.html" />
     <Content Include="app\templates\quiz\question_new.html" />
+    <Content Include="app\templates\quiz\results.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

@@ -1,0 +1,17 @@
+﻿{% extends "app/layout.html" %}
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.quizchoice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }} {% if request.user.is_authenticated and choice.correctAnswer %}-- Ésta es la respuesta correcta {% endif %}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'qindex' %}">Contestar otra pregunta?</a>
+
+{% endblock %}

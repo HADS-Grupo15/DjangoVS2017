@@ -56,9 +56,10 @@ urlpatterns = [
     url(r'^polls/', app.views.index, name='index'),
     url(r'^quiz/add/', app.views.Quiz_question_new, name='qadd'),
     url(r'^quiz/choice_add/(?P<question_id>\d+)/$', app.views.Quiz_choice_add, name='qchoice_add'),
-    url(r'^(?P<question_id>\d+)/results/$', app.views.results, name='qresults'),
-    url(r'^quiz/(?P<question_id>\d+)/$', app.views.QuizDetail, name='qdetail'),
-    url(r'^quiz/(?P<question_id>\d+)/vote/$', app.views.vote, name='qvote'),
-    url(r'^quiz/', app.views.Quiz_index, name='qindex')
+    url(r'^quiz/(?P<question_id>\d+)/results/$', app.views.Quiz_results, name='qresults'),
+    url(r'^quiz/(?P<question_id>\d+)/$', app.views.Quiz_detail, name='qdetail'),
+    url(r'^quiz/(?P<question_id>\d+)/vote/$', app.views.Quiz_vote, name='qvote'),
+    url(r'^quiz/', app.views.Quiz_index, name='qindex'),
+    #url(r'^quiz/chart/(?P<question_id>\d+)/$', app.views.Quiz_chart, name='qchart'),
    
 ]

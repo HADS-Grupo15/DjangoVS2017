@@ -25,13 +25,13 @@ TOPIC_CHOICES = (
 class QuizQuestion(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-    topic = models.CharField(max_length=6, choices=TOPIC_CHOICES, default='TFHADS')
+    topic = models.CharField(max_length=18, choices=TOPIC_CHOICES, default='TFHADS')
 
 class QuizChoice(models.Model):
     question = models.ForeignKey(QuizQuestion)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
-    correctAnswer = models.BooleanField
+    correctAnswer = models.BooleanField(default=False)
 
 class User(models.Model):
     email = models.CharField(max_length=200)
