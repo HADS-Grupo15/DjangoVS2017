@@ -245,3 +245,12 @@ def users_detail(request):
                 'latest_user_list': latest_user_list,
               }
     return render(request, 'polls/users.html', context)
+
+def Quiz_index_bytopic(request, topic_str):
+    latest_question_list = QuizQuestion.objects.order_by('-pub_date').filter(topic = topic_str)
+    template = loader.get_template('quiz/index.html')
+    context = {
+                'title':'Lista de preguntas del Quiz',
+                'latest_question_list': latest_question_list,
+              }
+    return render(request, 'quiz/index.html', context)

@@ -17,8 +17,8 @@ class Choice(models.Model):
 
 TOPIC_CHOICES = (
     #(lo que se guardará, lo que se mostrará),
-    ('Trabajo final HADS','Trabajo final HADS'),
-    ('Evaluación HADS', 'Evaluación HADS'),
+    ('Trabajo_final_HADS','Trabajo final HADS'),
+    ('Evaluación_HADS', 'Evaluación HADS'),
     ('Informática','Informática'),
     ('Otro','Otro'),
 )
