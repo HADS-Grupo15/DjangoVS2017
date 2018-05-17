@@ -15,7 +15,8 @@
 {% if request.user.is_authenticated %}
     <input type="submit" value="Seleccionar respuesta correcta" />
     <a href="{% url 'qchoice_add' question.id %}"><h3>Insertar Opciones</h3></a>
-    <a href="{% url 'qresults' question.id %}"> <h3>Ver resultados de la votacion</h3> </a><br />  
+    <a href="{% url 'qresults' question.id %}"> <h3>Ver resultados de la votacion</h3> </a>
+    <a href="{% url 'qchart' question.id %}"> <h3>Ver grafico de la votacion</h3> </a><br />  
 {% else %}
     <input type="submit" value="Vote" />
 {% endif %}

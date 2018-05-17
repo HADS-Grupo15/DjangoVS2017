@@ -3,9 +3,9 @@ get_summaries
 PipError
 UpdatingDefaultsHelpFormatter
 InstallationError
-models
+req
 operations
-__main__
+models
 baseparser
 wheel
 exceptions
@@ -33,7 +33,7 @@ utils
 locale
 parseopts
 logger
-req
+__main__
 sys
 commands
 FrozenRequirement

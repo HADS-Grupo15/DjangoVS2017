@@ -2,9 +2,9 @@ apps
 feeds
 forms
 views
-geos
-measure
-geoip
+admin
+serializers
+geometry
 default_app_config
 shortcuts
 db
@@ -12,8 +12,8 @@ gdal
 utils
 geoip2
 ptr
-geometry
-serializers
-admin
+geos
+geoip
+measure
 sitemaps
 management

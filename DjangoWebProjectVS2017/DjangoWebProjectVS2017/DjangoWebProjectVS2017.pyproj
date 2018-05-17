@@ -78,9 +78,12 @@
     <Content Include="app\templates\polls\results.html" />
     <Content Include="app\templates\quiz\choice_new.html" />
     <Content Include="app\templates\quiz\detail.html" />
+    <Content Include="app\templates\quiz\grafico.html" />
     <Content Include="app\templates\quiz\index.html" />
+    <Content Include="app\templates\quiz\incorrect.html" />
+    <Content Include="app\templates\quiz\correct.html" />
     <Content Include="app\templates\quiz\question_new.html" />
-    <Content Include="app\templates\quiz\results.html" />
+    <Content Include="app\templates\quiz\qresults.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

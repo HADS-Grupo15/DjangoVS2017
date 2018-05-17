@@ -85,10 +85,17 @@ def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/results.html', {'title':'Resultados de la pregunta:','question': question})
 
-def Quiz_results(request, question_id):
+def Quiz_results(request, question_id):#Usuarios logueados
     question = get_object_or_404(QuizQuestion, pk=question_id)
-    return render(request, 'quiz/results.html', {'title':'Resultados de la pregunta:','question': question})
+    return render(request, 'quiz/qresults.html', {'msg':'Resultados de la pregunta:','question': question})
 
+def Quiz_results2(request, question_id):#Usuarios sin loguear --> Respuesta correcta
+    question = get_object_or_404(QuizQuestion, pk=question_id)
+    return render(request, 'quiz/correct.html', {'question': question})
+
+def Quiz_results3(request, question_id):#Usuarios sin loguear --> Respuesta incorrecta
+    question = get_object_or_404(QuizQuestion, pk=question_id)
+    return render(request, 'quiz/incorrect.html', {'question': question})
 
 def vote(request, question_id):
     p = get_object_or_404(Question, pk=question_id)
@@ -107,6 +114,38 @@ def vote(request, question_id):
         # exitosamente el POST de un form. Esto evita que los datos se
         # puedan postear dos veces si el usuario vuelve atras en su browser.
         return HttpResponseRedirect(reverse('results', args=(p.id,)))
+
+
+def Quiz_vote(request, question_id):
+     p = get_object_or_404(QuizQuestion, pk=question_id)
+     try:
+        selected_choice = p.quizchoice_set.get(pk=request.POST['choice'])
+     except (KeyError, QuizChoice.DoesNotExist):
+        # Vuelve a mostrar el form.
+        return render(request, 'quiz/detail.html', {
+            'question': p,
+            'error_message': "ERROR: No se ha seleccionado una opcion",
+        })
+     else:
+        if request.user.is_authenticated():
+            try:
+                previous_correct_choice = p.quizchoice_set.get(correctAnswer=True)
+            except (QuizChoice.DoesNotExist):
+                previous_correct_choice = None
+
+            if previous_correct_choice:
+                previous_correct_choice.correctAnswer = False
+                previous_correct_choice.save()
+            selected_choice.correctAnswer = True
+            selected_choice.save()
+        else: 
+            selected_choice.votes += 1
+            selected_choice.save()
+            if selected_choice.correctAnswer==False:
+                return HttpResponseRedirect(reverse('incorrect', args=(p.id,)))             
+            else:
+                return HttpResponseRedirect(reverse('correct', args=(p.id,)))
+                
 
 def choice_add(request, question_id):
         question = Question.objects.get(id = question_id)
@@ -172,34 +211,6 @@ def Quiz_choice_add(request, question_id):
         #return render_to_response ('choice_new.html', {'form': form, 'poll_id': poll_id,}, context_instance = RequestContext(request),)
         return render(request, 'quiz/choice_new.html', {'title':'Pregunta:'+ q.question_text,'topic':'Tema: '+q.topic,'form': form, 'error_message': error_message})#añadirle el flag(?)#
 
-def Quiz_vote(request, question_id):
-    p = get_object_or_404(QuizQuestion, pk=question_id)
-    try:
-        selected_choice = p.quizchoice_set.get(pk=request.POST['choice'])
-    except (KeyError, QuizChoice.DoesNotExist):
-        # Vuelve a mostrar el form.
-        return render(request, 'quiz/detail.html', {
-            'question': p,
-            'error_message': "ERROR: No se ha seleccionado una opcion",
-        })
-    else:
-        if request.user.is_authenticated():
-            try:
-                previous_correct_choice = p.quizchoice_set.get(correctAnswer=True)
-            except (QuizChoice.DoesNotExist):
-                previous_correct_choice = None
-            if previous_correct_choice:
-                previous_correct_choice.correctAnswer = False
-                previous_correct_choice.save()
-            selected_choice.correctAnswer = True
-            selected_choice.save()
-        else:
-            selected_choice.votes += 1
-            selected_choice.save()
-        # Siempre devolver un HttpResponseRedirect despues de procesar
-        # exitosamente el POST de un form. Esto evita que los datos se
-        # puedan postear dos veces si el usuario vuelve atras en su browser.
-        return HttpResponseRedirect(reverse('qresults', args=(p.id,)))
 
 def chart(request, question_id):
     q=Question.objects.get(id = question_id)
@@ -211,19 +222,21 @@ def chart(request, question_id):
         'counts': json.dumps(counts),
     }
 
-    return render(request, 'quiz/grafico.html', context)
+    return render(request, 'polls/grafico.html', context)
 
-#def Quiz_chart(request, question_id):
-#    q=QuizQuestion.objects.get(id = question_id)
-#    qs = QuizChoice.objects.filter(question=q)
-#    dates = [obj.choice_text for obj in qs]
-#    counts = [obj.votes for obj in qs]
-#    context = {
-#        'dates': json.dumps(dates),
-#        'counts': json.dumps(counts),
-#    }
+def Quiz_chart(request, question_id):
+   qq=QuizQuestion.objects.get(id = question_id)
+   qqs = QuizChoice.objects.filter(question=qq)
+   dates = [obj.choice_text for obj in qqs]
+   counts = [obj.votes for obj in qqs]
+   context = {
+        'dates': json.dumps(dates),
+        'counts': json.dumps(counts),
+    }
 
-    return render(request, 'quiz/grafico.html', context)
+   return render(request,'quiz/grafico.html', context)
+
+
 
 def user_new(request):
         if request.method == "POST":
