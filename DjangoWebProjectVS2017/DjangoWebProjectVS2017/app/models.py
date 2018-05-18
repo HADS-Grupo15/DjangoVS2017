@@ -15,13 +15,17 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
-TOPIC_CHOICES = (
+TOPIC_CHOICES = [
     #(lo que se guardará, lo que se mostrará),
-    ('Trabajo_final_HADS','Trabajo final HADS'),
-    ('Evaluación_HADS', 'Evaluación HADS'),
+    ('Trabajo final HADS','Trabajo final HADS'),
+    ('Evaluación HADS', 'Evaluación HADS'),
     ('Informática','Informática'),
     ('Otro','Otro'),
-)
+]
+
+class Topic(models.Model):
+    topic = models.CharField(max_length=18, choices= [('Todos','Todos')] + TOPIC_CHOICES)
+
 class QuizQuestion(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')

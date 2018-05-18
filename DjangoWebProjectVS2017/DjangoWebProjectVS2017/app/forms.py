@@ -3,7 +3,7 @@ Definition of forms.
 """
 
 from django import forms
-from app.models import QuizQuestion,QuizChoice,Question,Choice,User
+from app.models import QuizQuestion,QuizChoice,Question,Choice,User,Topic
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 
@@ -36,6 +36,25 @@ class UserForm(forms.ModelForm):
         class Meta:
             model = User
             fields = ('email','nombre',)
+
+#TOPIC_CHOICES_INCL_ALL = (
+#    #(lo que se guardará, lo que se mostrará),
+#    ('', 'Todos'),
+#    ('Trabajo_final_HADS','Trabajo final HADS'),
+#    ('Evaluación_HADS', 'Evaluación HADS'),
+#    ('Informática','Informática'),
+#    ('Otro','Otro'),
+#)
+
+#class TopicForm(forms.Form):
+#    topic = forms.CharField(label='Ordenar por tema:', widget=forms.Select(choices=TOPIC_CHOICES_INCL_ALL))
+
+class TopicForm(forms.ModelForm):
+    
+    class Meta:
+        model = Topic
+        fields = ('topic',)
+
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""

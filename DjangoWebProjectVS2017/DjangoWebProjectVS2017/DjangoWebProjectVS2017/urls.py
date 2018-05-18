@@ -62,7 +62,7 @@ urlpatterns = [
     url(r'^quiz/(?P<question_id>\d+)/$', app.views.Quiz_detail, name='qdetail'),
     url(r'^quiz/(?P<question_id>\d+)/vote/$', app.views.Quiz_vote, name='qvote'),
     url(r'^quiz/$', app.views.Quiz_index, name='qindex'),
-    url(r'^quiz/(?P<topic_str>\w+)/$', app.views.Quiz_index_bytopic, name='qindexbytopic'),
+    #url(r'^quiz/(?P<topic_str>\w+)/$', app.views.Quiz_index_bytopic, name='qindexbytopic'),
     url(r'^quiz/chart/(?P<question_id>\d+)/$', app.views.Quiz_chart, name='qchart'),
    
 ]

@@ -4,6 +4,11 @@
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
 
+<form action="" method="get">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Mostrar por tema" />
+</form>
+
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}

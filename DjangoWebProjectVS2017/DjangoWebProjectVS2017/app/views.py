@@ -3,6 +3,7 @@ AQUI VAN LAS FUNCIONES
 """
 
 from django.shortcuts import render,get_object_or_404
+from app.forms import TopicForm
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
@@ -63,11 +64,22 @@ def index(request):
     return render(request, 'polls/index.html', context)
 
 def Quiz_index(request):
-    latest_question_list = QuizQuestion.objects.order_by('-pub_date')
+    form = TopicForm()
+
+    topic_str = request.GET.get('topic')
+    if topic_str == 'Todos' or topic_str is None:
+        latest_question_list = QuizQuestion.objects.order_by('-pub_date')#todos los temas
+        message = 'Todos los temas'
+    else:
+        latest_question_list = QuizQuestion.objects.order_by('-pub_date').filter(topic = topic_str)#filtrar solo el tema pasado en parametro GET
+        message = 'Tema:' + topic_str
+
     template = loader.get_template('quiz/index.html')
     context = {
                 'title':'Lista de preguntas del Quiz',
+                'message': message,
                 'latest_question_list': latest_question_list,
+                'form': form
               }
     return render(request, 'quiz/index.html', context)
 
@@ -259,11 +271,11 @@ def users_detail(request):
               }
     return render(request, 'polls/users.html', context)
 
-def Quiz_index_bytopic(request, topic_str):
-    latest_question_list = QuizQuestion.objects.order_by('-pub_date').filter(topic = topic_str)
-    template = loader.get_template('quiz/index.html')
-    context = {
-                'title':'Lista de preguntas del Quiz',
-                'latest_question_list': latest_question_list,
-              }
-    return render(request, 'quiz/index.html', context)
+#def Quiz_index_bytopic(request, topic_str):
+#    latest_question_list = QuizQuestion.objects.order_by('-pub_date').filter(topic = topic_str)
+#    template = loader.get_template('quiz/index.html')
+#    context = {
+#                'title':'Lista de preguntas del Quiz',
+#                'latest_question_list': latest_question_list,
+#              }
+#    return render(request, 'quiz/index.html', context)
